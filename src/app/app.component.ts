@@ -1,18 +1,13 @@
 import { Component } from '@angular/core';
 import { 
 	latLng, 
-	Map, 
 	tileLayer, 
-	circle, 
-	polygon, 
-	marker,
-	icon
+	Icon, icon, Marker
 } from 'leaflet';
 
-import * as L from 'leaflet';
-
-import 'leaflet/dist/images/marker-shadow.png';
-import 'leaflet/dist/images/marker-icon.png';
+import 'leaflet';
+import 'leaflet-routing-machine';
+declare let L;
 
 @Component({
 	selector: 'app-root',
@@ -23,23 +18,30 @@ export class AppComponent {
 	options = {
 		layers: [
 			tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
-				maxZoom: 18, attribution: '...' 
+				attribution: '© OpenStreetMap contributors'
 			})
 		],
-		zoom: 9,
+		zoom: 1,
 		center: latLng(46.879966, -121.726909)
 	};
 
-	layers = [
-		circle([ 46.95, -122 ], { radius: 5000 }),
-		polygon([[ 46.8, -121.85 ], [ 46.92, -121.92 ], [ 46.87, -121.8 ]]),
-		marker([ 46.879966, -121.726909 ], {
-			icon: icon({
-				iconSize: [ 25, 41 ],
-				iconAnchor: [ 13, 41 ],
-				iconUrl: 'leaflet/marker-icon.png',
-				shadowUrl: 'leaflet/marker-shadow.png'
-			  })
-		})
-	];
+	// Override default Icons
+	private defaultIcon: Icon = icon({
+		iconUrl: 'assets/marker-icon.png',
+		shadowUrl: 'assets/marker-shadow.png'
+	});
+	
+	ngOnInit() {
+		Marker.prototype.options.icon = this.defaultIcon;
+	}
+
+	onMapReady(map: L.Map) {
+		L.Routing.control({
+			waypoints: [
+			  	L.latLng(57.74, 11.94),
+			  	L.latLng(57.6792, 11.949)
+			],
+			routeWhileDragging: true
+		}).addTo(map);
+	}
 }
