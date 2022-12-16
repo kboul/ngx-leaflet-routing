@@ -20,9 +20,9 @@
 		"@angular/platform-browser-dynamic": "^14.2.12",
 		"@angular/router": "^14.2.12",
 		"@asymmetrik/ngx-leaflet": "^8.1.0",
-		"@types/leaflet": "^1.5.19",
+		"@types/leaflet": "^1.9.0",
 		"core-js": "^3.6.5",
-		"leaflet": "^1.7.1",
+		"leaflet": "^1.9.3",
 		"leaflet-routing-machine": "^3.2.9",
 		"rxjs": "^6.6.3",
 		"zone.js": "~0.11.4"
