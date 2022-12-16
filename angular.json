@@ -130,6 +130,8 @@
 				}
 			}
 		}
-	},
-	"defaultProject": "ngx-leaflet-routing"
+  },
+  "cli": {
+    "analytics": false
+  }
 }
