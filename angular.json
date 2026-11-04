@@ -19,7 +19,7 @@
 						},
 						"index": "src/index.html",
 						"browser": "src/main.ts",
-						"polyfills": ["src/polyfills.ts"],
+						"polyfills": ["zone.js"],
 						"tsConfig": "src/tsconfig.app.json",
 						"assets": [
 							{
@@ -56,6 +56,11 @@
 							"namedChunks": false,
 							"aot": true,
 							"extractLicenses": true
+						},
+						"testing": {
+							"polyfills": ["zone.js", "zone.js/testing"],
+							"assets": ["src/favicon.ico", "src/assets"],
+							"styles": ["src/styles.css"]
 						}
 					},
 					"defaultConfiguration": ""
@@ -78,15 +83,11 @@
 					}
 				},
 				"test": {
-					"builder": "@angular/build:karma",
+					"builder": "@angular/build:unit-test",
 					"options": {
-						"main": "src/test.ts",
-						"polyfills": "src/polyfills.ts",
 						"tsConfig": "src/tsconfig.spec.json",
-						"karmaConfig": "src/karma.conf.js",
-						"styles": ["src/styles.css"],
-						"scripts": [],
-						"assets": ["src/favicon.ico", "src/assets"]
+						"buildTarget": ":build:testing",
+						"runner": "vitest"
 					}
 				}
 			}
