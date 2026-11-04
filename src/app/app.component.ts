@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { latLng, tileLayer, Icon, icon, Marker } from "leaflet";
 
 import "leaflet";
@@ -9,6 +9,7 @@ declare let L;
 	selector: "app-root",
 	templateUrl: "./app.component.html",
 	styleUrls: ["./app.component.css"],
+	changeDetection: ChangeDetectionStrategy.Eager,
 	standalone: false
 })
 export class AppComponent {

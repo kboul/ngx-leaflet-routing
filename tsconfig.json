@@ -1,10 +1,10 @@
 {
 	"compileOnSave": false,
 	"compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
+    "strict": false,
     "module": "es2015",
     "moduleResolution": "bundler",
     "experimentalDecorators": true,
