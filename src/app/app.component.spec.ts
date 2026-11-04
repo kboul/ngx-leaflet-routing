@@ -1,27 +1,52 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
+import { LeafletModule } from "@bluehalo/ngx-leaflet";
 import { AppComponent } from "./app.component";
+
+declare let L;
+
 describe("AppComponent", () => {
-	beforeEach(waitForAsync(() => {
-		TestBed.configureTestingModule({
+	let addTo: ReturnType<typeof vi.fn>;
+	let routingControl: ReturnType<typeof vi.spyOn>;
+
+	beforeEach(async () => {
+		addTo = vi.fn();
+		routingControl = vi
+			.spyOn(L.Routing, "control")
+			.mockReturnValue({ addTo });
+
+		await TestBed.configureTestingModule({
+			imports: [LeafletModule],
 			declarations: [AppComponent]
 		}).compileComponents();
-	}));
-	it("should create the app", waitForAsync(() => {
+	});
+
+	afterEach(() => {
+		vi.restoreAllMocks();
+	});
+
+	it("should create the app", () => {
 		const fixture = TestBed.createComponent(AppComponent);
-		const app = fixture.debugElement.componentInstance;
-		expect(app).toBeTruthy();
-	}));
-	it(`should have as title 'ngx-leaflet-routing'`, waitForAsync(() => {
-		const fixture = TestBed.createComponent(AppComponent);
-		const app = fixture.debugElement.componentInstance;
-		expect(app.title).toEqual("ngx-leaflet-routing");
-	}));
-	it("should render title in a h1 tag", waitForAsync(() => {
+		expect(fixture.componentInstance).toBeTruthy();
+	});
+
+	it("should render the leaflet map", () => {
 		const fixture = TestBed.createComponent(AppComponent);
 		fixture.detectChanges();
-		const compiled = fixture.debugElement.nativeElement;
-		expect(compiled.querySelector("h1").textContent).toContain(
-			"Welcome to ngx-leaflet-routing!"
-		);
-	}));
+		expect(
+			fixture.nativeElement.querySelector(".leaflet-container")
+		).toBeTruthy();
+	});
+
+	it("should add a route between the two waypoints when the map is ready", () => {
+		const fixture = TestBed.createComponent(AppComponent);
+		fixture.detectChanges();
+
+		expect(routingControl).toHaveBeenCalledTimes(1);
+		const { waypoints } = routingControl.mock.calls[0][0];
+		expect(waypoints.map(w => [w.lat, w.lng])).toEqual([
+			[57.74, 11.94],
+			[57.6792, 11.949]
+		]);
+		expect(addTo).toHaveBeenCalledWith(expect.any(L.Map));
+	});
 });

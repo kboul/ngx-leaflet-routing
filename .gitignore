@@ -5,6 +5,9 @@
 /tmp
 /out-tsc
 
+# Angular CLI cache
+/.angular/
+
 # dependencies
 /node_modules
 

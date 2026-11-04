@@ -2,8 +2,10 @@
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
 		"outDir": "../out-tsc/spec",
-		"types": ["jasmine", "node"]
+		"types": ["node", "vitest/globals"]
 	},
-	"files": ["test.ts", "polyfills.ts"],
-	"include": ["**/*.spec.ts", "**/*.d.ts"]
+	"include": ["**/*.spec.ts", "**/*.d.ts"],
+	"angularCompilerOptions": {
+		"strictTemplates": false
+	}
 }
